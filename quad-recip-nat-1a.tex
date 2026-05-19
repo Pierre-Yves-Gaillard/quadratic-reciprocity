@@ -1,0 +1,304 @@
+% quad-recip-nat-1a
+% https://docs.google.com/document/d/1cZ4IEmhg1Ofbo3x7VlOULQyIV1jc_2IUupN2gr8Ae-g/edit?tab=t.0
+% !TEX encoding = UTF-8 Unicode
+\documentclass[12pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb,amsmath,amsthm} 
+\usepackage[letterpaper,top=40pt,left=60pt,right=60pt,bottom=65pt]{geometry} 
+\usepackage{microtype}
+%\usepackage{tikz-cd}\usepackage{varwidth}\usepackage{comment}
+\usepackage[pdfusetitle]{hyperref}
+%\usepackage{marvosym}% emoji https://tex.stackexchange.com/questions/3695/smileys-in-latex https://ctan.org/pkg/marvosym?lang=en
+\usepackage{biblatex} 
+\addbibresource{qr2605.bib} 
+%\pagestyle{empty}
+%\setlength\parindent{0pt}
+\setlength{\parskip}{3pt} % variable
+%\renewcommand{\baselinestretch}{1.1} % variable
+\newcommand{\F}{\mathbb F}  
+\newcommand{\Z}{\mathbb Z} 
+\newcommand{\sgn}{\operatorname{sgn}} 
+\newcommand{\Ker}{\operatorname{Ker}} 
+\newcommand{\Ima}{\operatorname{Im}} 
+\newtheorem{thm}{Theorem}%[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{prop}[thm]{Proposition}
+\title{A natural proof of Quadratic Reciprocity} \author{Pierre-Yves Gaillard} \date{}
+
+\begin{document}% \tiny \scriptsize \footnotesize \small \normalsize \large \Large \LARGE \huge \Huge 
+
+\maketitle
+
+\section{Introduction}% 
+
+The purpose of this text is to give a proof of Quadratic Reciprocity which is, in some sense, an \emph{additive version of the standard proof of Gauss's Lemma}.\footnote{This text is available at \url{https://github.com/Pierre-Yves-Gaillard/quadratic-reciprocity}} Here is a more precise formulation: 
+
+A common proof of Quadratic Reciprocity proceeds in three steps: 
+\begin{enumerate}
+\item Prove Gauss's Lemma. 
+\item Derive Corollary~\ref{Cfap} below from Gauss's Lemma. 
+\item Derive Quadratic Reciprocity from Corollary~\ref{Cfap}. 
+\end{enumerate} 
+This is done in Hardy and Wright \cite{hardy2008introduction}, in Niven, Zuckerman and Montgomery \cite{niven1991introduction}, and in Wallach \cite{wallach} (and probably in many other texts). Steps~1 and 3 are fairly standard, but there are numerous ways of doing Step~2. Our main observation is that a minor variation of the standard argument used in Step~1 works for Step~2. 
+
+To elaborate: the assumptions of Gauss's Lemma and of Theorem~\ref{Tmain} are that \(p\) is an odd prime and \(a\) an integer prime to \(p\). The standard argument in question goes as follows: we set 
+\begin{equation}\label{EIU}
+I=\{1,2,\ldots,\tfrac{p-1}2\},\quad U=\{a,2a,3a,\ldots,\tfrac{p-1}2\,a\},
+\end{equation} 
+we define two other sets \(M\) and \(V\),\footnote{The sets \(M\) and \(V\) are respectively defined in \eqref{EM} and \eqref{EV} below.} we prove \(M=I\) and \(V=U\), and we derive the conclusion from the equalities 
+\begin{equation}\label{Eprod}
+\prod_{i\in I}i=\prod_{m\in M}m\quad\text{and}\quad\prod_{u\in U}u=\prod_{v\in V}v.
+\end{equation} 
+Our point is that Step~2 can be easily accomplished via the additive analog 
+\begin{equation}\label{Esum} 
+\sum_{i\in I}i=\sum_{m\in M}m\quad\text{and}\quad\sum_{u\in U}u=\sum_{v\in V}v
+\end{equation} 
+of the equalities \eqref{Eprod}. 
+
+Step~3 is basically the same in \cite{hardy2008introduction}, \cite{niven1991introduction} and \cite{wallach}, and also in this text. Corollary~\ref{Cfap} is a corollary to Theorem~\ref{Tmain}. Theorem~\ref{Tmain} is implicit in the proof of Theorem~3.3 in \cite{niven1991introduction}; it is even more implicit in \cite{hardy2008introduction} (Section~6.13); it appears as Lemma~10 in \cite{wallach}. Theorem~\ref{Tmain} yields the most transparent proof I know of the second supplement\footnote{This is the equality \((\frac2p)=(-1)^{(p^2-1)/8}\).} to the law of Quadratic Reciprocity (this argument was already given in \cite{niven1991introduction}---see again the proof of Theorem~3.3 there). 
+
+In the last two sections we give two proofs of Gauss's and a generalization of Euler's Criterion. 
+
+Until further notice, \(p\) and \(q\) are distinct odd primes, and \(a\) is an integer prime to \(p\). Recall that the \textbf{Legendre symbol} \((\frac ap)\) is equal to \(1\) if \(a\) is a square \((\bmod\,p)\), and to \(-1\) if \(a\) is a non-square \((\bmod\,p)\). (Since the integers \(x\) and \(y\) have the same square \((\bmod\,p)\) if and only if \(y\equiv\pm x\pmod{p}\), we see that there are \((p-1)/2\) nonzero square residues, and \((p-1)/2\) non-square residues \((\bmod\,p)\).) Our main goal is to prove Quadratic Reciprocity: 
+
+\begin{thm}[Quadratic Reciprocity]\label{TQR} 
+If \(p\) and \(q\) are distinct odd primes, then we have \((\frac pq)(\frac qp)=(-1)^{(p-1)(q-1)/4}\). 
+\end{thm} 
+
+\section{Proof of Gauss's Lemma and Theorem~\ref{Tmain}}% 
+
+Let $\lfloor x\rfloor$ denote the floor of the real number $x$ (the greatest integer less than or equal to $x$), and set 
+\[
+f(a,p)=\sum_{i=1}^{(p-1)/2}\left\lfloor\frac{ia}p\right\rfloor.
+\] 
+Quadratic Reciprocity will follow from the theorem below: 
+
+\begin{thm}\label{Tmain} 
+If \(p\) is an odd prime and \(a\) an integer prime to \(p\), then we have \((\frac ap)=(-1)^\ell\) with 
+\[
+\ell=(a+1)\,\frac{p^2-1}8+f(a,p).
+\] 
+\end{thm} 
+
+\begin{remark} 
+We have 
+\[
+\frac{p^2-1}8=\sum_{i=1}^{(p-1)/2}i;
+\] 
+in particular \((p^2-1)/8\) is an integer. (One can also observe that \(\frac{p-1}2\frac{p+1}2\) is even.) 
+\end{remark} 
+
+The proof will proceed by comparing multiplicative and additive analogs of the same combinatorial identities. 
+
+\begin{cor} 
+We have \((\frac2p)=(-1)^{(p^2-1)/8}\). 
+\end{cor} 
+
+This follows from the fact that \(f(2,p)=0\), because, for \(1\le i\le(p-1)/2\), we have \(2i\le p-1<p\), so \(\lfloor 2i/p\rfloor=0\). 
+
+\begin{cor}\label{Cfap} 
+We have \((\frac ap)=(-1)^{f(a,p)}\) if \(a\) is odd. 
+\end{cor} 
+
+To prove Theorem~\ref{Tmain} we shall use Euler's Criterion: 
+
+\begin{thm}[Euler's Criterion]\label{EC} 
+Recall that \(p\) is an odd prime and \(a\) is an integer prime to \(p\). Set \(n=(p-1)/2\). Then we have \((\frac ap)\equiv a^n\pmod{p}\).  
+\end{thm} 
+
+A generalization of Euler's Criterion is given in the last section. 
+
+\begin{cor}\label{Chom} 
+We have \((\frac{ab}p)=(\frac ap)(\frac bp)\) if \(a\) and \(b\) are integers prime to \(p\). We also have \((\frac1p)=1\). 
+\end{cor} 
+
+To prove Euler's Criterion we use the following theorem: 
+
+\begin{thm}\label{Tcyc} 
+The multiplicative group \(\F_p^*=\F_p\setminus\{0\}\) of the field \(\F_p=\Z/p\Z\) is cyclic (of order \(p-1\)).  
+\end{thm}  
+
+For a proof of Theorem~\ref{Tcyc}, we refer the reader to Weil's book \cite{weil1979}, Theorem~X.1. A generalization of Euler's Criterion is given in the last section. 
+
+\begin{proof}[Proof of Euler's Criterion (Theorem \ref{EC})] 
+If \(b\) is in \(\F_p^*\), we have \(b^n=\pm1\) (because \((b^n)^2=b^{2n}=1\)) and we must show that \(b^n=1\) if and only if \(b\) is a square. Let \(\zeta\) be a generator of \(\F_p^*\). Then \(b=\zeta^j\) for some integer \(j\). Then we get \(b^n=\zeta^{jn}\), and \(b^n=1\) if and only if \(2n\) divides \(jn\), which means $j$ is even; this, in turn, means $b$ is a square. 
+\end{proof} 
+
+For \(i\in I\) (see \eqref{EIU}), let \(r_i\) be the remainder when \(ia\) is divided by \(p\), so that we have 
+\begin{equation}\label{Erem} 
+ia=p\left\lfloor\frac{ia}p\right\rfloor+r_i.
+\end{equation} 
+In particular, the \(r_i\) are distinct and satisfy \(1\le r_i\le p-1\). Set \(J=\{i\in I\mid r_i\le n\}\), \(K=\{i\in I\mid r_i\ge n+1\}\). We denote the cardinality of the set \(X\) by \(|X|\) and we indicate by \(X=Y\sqcup Z\) the fact that \(X\) is the disjoint union of \(Y\) and \(Z\). 
+
+\begin{thm}[Gauss's Lemma]\label{TGL} 
+We have \((\frac ap)=(-1)^{|K|}\). 
+\end{thm} 
+
+\begin{proof}[Proof of Gauss's Lemma (Theorem \ref{TGL}) and of Theorem \ref{Tmain}] 
+The equality \(I=J\sqcup K\) is clear. Set 
+\begin{equation}\label{EM}
+M_1=\{r_j\mid j\in J\},\quad M_2=\{p-r_k\mid k\in K\},\quad M=M_1\cup M_2.
+\end{equation} 
+We claim 
+\begin{equation}\label{Esets} 
+I=M_1\sqcup M_2=M.
+\end{equation} 
+To prove \eqref{Esets}, note that, since the \(r_i\) are distinct (indeed if \(r_i=r_j\) then \(p\mid a(i-j)\), and since \(\gcd(a,p)=1\) and \(|i-j|<p\) we get \(i=j\)), it suffices to show \(r_j\ne p-r_k\) for \(j\in J,k\in K\). But \(r_j=p-r_k\) would imply \(0\equiv r_j+r_k\equiv a(j+k)\pmod{p}\), hence \(j+k\equiv0\pmod{p}\), hence \(p\) divides \(j+k\), contradicting the inequalities \(2\le j+k\le p-1\). This proves \eqref{Esets}. 
+
+The sets \(I,U,M\) and \(V\) in \eqref{Eprod} and \eqref{Esum} are defined by \eqref{EIU}, \eqref{EM} and 
+\begin{equation}\label{EV} 
+V=\left\{\left.p\,\left\lfloor\frac{ia}p\right\rfloor+r_i\ \right|\ i\in I\right\}.
+\end{equation} 
+The equalities \(M=I\) and \(V=U\) follow respectively from \eqref{Esets} and \eqref{Erem}. 
+
+In the remainder of this section \(i,j\) and \(k\) run respectively over \(I,J\) and \(K\). 
+
+In view of \eqref{EIU}, \eqref{EM} and \eqref{EV}, the first and second equalities in \eqref{Eprod} give respectively  
+\begin{equation}\label{Esetsmult} 
+n!=\prod i=\left(\prod r_j\right)\left(\prod (p-r_k)\right)\equiv(-1)^{|K|}\prod r_i\pmod{p} 
+\end{equation} 
+and 
+\begin{equation}\label{E1mult} 
+n!\,a^n=\prod ia=\prod\left(p\left\lfloor\frac{ia}p\right\rfloor+r_i\right)\equiv\prod r_i\pmod{p}. 
+\end{equation} 
+Similarly, the first and second equalities in \eqref{Esum} give respectively 
+\begin{equation}\label{Esetsadd} 
+\frac{p^2-1}8=\sum i=\sum r_j+\sum\,(p-r_k)=\sum r_j+p\,|K|-\sum r_k\equiv\sum r_i+|K|\pmod{2} 
+\end{equation} 
+and 
+\begin{equation}\label{E1add} 
+a\ \frac{p^2-1}8=\sum_{i=1}^nia=p\,f(a,p)+\sum r_i\equiv f(a,p)+\sum r_i\pmod{2}. 
+\end{equation} 
+Now Gauss's Lemma (Theorem \ref{TGL}) follows from Euler's Criterion (Theorem~\ref{EC}), \eqref{Esetsmult} and \eqref{E1mult}. To prove Theorem~\ref{Tmain}, it suffices to show \(|K|\equiv\ell\pmod{2}\) (in the notation of Theorems \ref{TGL} and \ref{Tmain}). We have 
+\[
+|K|\equiv\frac{p^2-1}8+\sum r_i\equiv\frac{p^2-1}8+a\,\frac{p^2-1}8+f(a,p)\equiv\ell\pmod{2},
+\] 
+the first congruence following from \eqref{Esetsadd} and the second from \eqref{E1add}. 
+\end{proof} 
+
+\section{Proof of Quadratic Reciprocity}% 
+
+We prove Quadratic Reciprocity (Theorem~\ref{TQR}). Recall that \(p\) and \(q\) are distinct odd primes. By Corollary~\ref{Cfap}, it suffices to show 
+\[
+f(p,q)+f(q,p)=\frac{(p-1)(q-1)}4\ . 
+\] 
+For any subset \(S\) of \(\mathbb R^2\), put \(S^*=S\cap\Z^2\). Consider the open rectangle 
+\[
+R=\{(x,y)\in\mathbb R^2\mid 0<x<\tfrac p2,0<y<\tfrac q2\},
+\] 
+the diagonal 
+\[
+D=\{(x,y)\in R\mid py=qx\},
+\] 
+the semi-open triangle above the diagonal 
+\[
+A=\{(x,y)\in R\mid py\ge qx\}, 
+\] 
+and the semi-open triangle below the diagonal 
+\[
+B=\{(x,y)\in R\mid py\le qx\}.
+\] 
+Recall that, if \(X,Y,Z\) are sets, we denote the cardinality of \(X\) by \(|X|\) and we indicate by \(X=Y\sqcup Z\) the fact that \(X\) is the disjoint union of \(Y\) and \(Z\). We have \(D^*=\varnothing\). Indeed, \(py=qx\) with \((x,y)\in R^*\) would imply that \(p\) divides \(x\) (because \(p\) and \(q\) are relatively prime), which is impossible since \(0<x<p/2\). We get 
+\[
+A^*\cap B^*=D^*=\varnothing,\quad R^*=A^*\sqcup B^*,\quad|A^*|+|B^*|=|R^*|=\frac{(p-1)(q-1)}4\ .
+\] 
+From the equations displayed above, it is enough to show \(f(p,q)=|A^*|\) and \(f(q,p)=|B^*|\). Let us prove \(f(q,p)=|B^*|\). Recall the definition of Iverson's bracket: if \((S)\) is a statement, then \([(S)]=1\) if \((S)\) is true, and \([(S)]=0\) if \((S)\) is false. Recall also that, if \(t\ge0\), then \(\lfloor t\rfloor\) is the number of positive integers \(\le t\): 
+\[
+\lfloor t\rfloor=\sum_{i\in\Z}\ [1\le i\le t]\quad\text{for }t\ge0.
+\] 
+We have 
+\[
+|B^*|=\sum_{i=1}^{(p-1)/2}\sum_{j\in\Z}\left[1\le j\le\frac{iq}p\right]=\sum_{i=1}^{(p-1)/2}\left\lfloor\frac{iq}p\right\rfloor=f(q,p).
+\] 
+The equality \(f(p,q)=|A^*|\) is proved similarly. This proves Quadratic Reciprocity. 
+
+\section{Two proofs of Gauss's Lemma}% 
+
+We add two proofs of Gauss's Lemma (or, more precisely, of a version of Gauss's Lemma which is slightly stronger than the one in Theorem~\ref{TGL}). 
+
+Recall that \(p\) is an odd prime, that \(n=(p-1)/2\), that \(\F_p\) is the field \(\Z/p\Z\), and that \(\F_p^*=\F_p\setminus\{0\}\) is its multiplicative group (see Theorem~\ref{Tcyc}). Let \(a\in\F_p^*\) and let \(x_1,\ldots,x_n\in\F_p^*\) satisfy 
+\[
+\F_p^*=\{x_1,-x_1,\ldots,x_n,-x_n\}.
+\]  
+There is a unique permutation \(\sigma\) of \(I=\{1,\ldots,n\}\) such that \(ax_i=\pm x_{\sigma(i)}\) for all \(i\in I\). Recall that \((\frac ap)\) is the Legendre symbol of \(a\) and \(p\). Indeed, multiplication by \(a\) is a bijection on \(\F_p^*\) which permutes the subsets \(\{x_i, -x_i\}\). (We defined \((\frac bp)\) for \(b\in\Z\) prime to \(p\), but it is clear that, once \(p\) is chosen, \((\frac bp)\) depends only on the congruence class \(\bar b\) of \(b\pmod{p}\), so that \((\frac{\bar b}p)\) is well-defined. Also we regard \((\frac cp)\) as equal to \(\pm1\) sometimes in \(\Z\), sometimes in \(\F_p\).) 
+
+\begin{thm}[Gauss's Lemma, strong form]\label{TSGL} 
+In the above setting we have 
+\begin{equation}\label{ESGL}
+\left(\frac ap\right)=\prod_{i=1}^n\ \frac{ax_i}{x_{\sigma(i)}}\ . 
+\end{equation} 
+\end{thm} 
+
+\begin{proof}[First proof of Theorem \ref{TSGL}] 
+Since the right-hand side is equal to \(a^n\), the result follows from Euler's Criterion (Theorem~\ref{EC}). 
+\end{proof} 
+
+The above proof is especially short, but slightly mysterious. The following proof will be a little bit longer, but hopefully less mysterious. More precisely, we hope the next proof will make clearer where the expression in the right-hand side of \eqref{ESGL} comes from. 
+
+\begin{lem}\label{L1} 
+The Legendre symbol \((\frac ap)\) is the sign of the permutation \(x\mapsto ax\) of \(\F_p^*\). 
+\end{lem} 
+
+\begin{proof} 
+Let \(\zeta\) be a generator of \(\F_p^*\) (see Theorem~\ref{Tcyc}). It suffices to show that the permutation \(x\mapsto\zeta x\) of \(\F_p^*\) is odd (see Corollary~\ref{Chom}) (indeed, both \(x\mapsto(\frac xp)\) and the sign of the permutation \(y\mapsto xy\) of \(\F_p^*\) are multiplicative homomorphisms \(\F_p^*\to\{\pm1\}\), so it suffices to check they agree on a generator). But this permutation is the \(2n\)-cycle \((\zeta^1,\zeta^2,\ldots,\zeta^{2n})\). 
+\end{proof} 
+
+\begin{thm}\label{TGGL} 
+Let \(\sigma\) be a permutation of \(\F_p^*\) satisfying \(\sigma(-x)=-\sigma(x)\) for all \(x\in\F_p^*\). Then there is a unique permutation $\sigma'$ of \(I=\{1,\ldots,n\}\) such that \(\sigma(x_i)=\pm x_{\sigma'(i)}\) for all \(i\in I\), and we have 
+\[
+\sgn(\sigma)=\prod_{i=1}^n\ \frac{\sigma(x_i)}{x_{\sigma'(i)}}\ . 
+\] 
+\end{thm} 
+
+\begin{proof} 
+The existence of \(\sigma'\) is clear. Let \(K\) be the set of those \(i\in I\) such that \(\sigma(x_i)=-x_{\sigma'(i)}\). We must show that the sign of \(\sigma\) is \((-1)^{|K|}\), where \(|K|\) is the cardinality of \(K\). It suffices to define permutations \(\sigma_1,\ldots,\sigma_m\) of \(\F_p^*\) such that: 
+\begin{equation}\label{Esmk} 
+\sigma=\sigma_m\circ\cdots\circ \sigma_1,\quad m=|K|+2,
+\end{equation} 
+\begin{equation}\label{Esign} 
+\sgn(\sigma_1)=\sgn(\sigma')=\sgn(\sigma_2),\quad\sgn(\sigma_3)=\sgn(\sigma_4)=\cdots =\sgn(\sigma_m)=-1.
+\end{equation} 
+To do that, we set 
+\[
+\sigma_1(x_i)=x_{\sigma'(i)},\quad\sigma_1(-x_i)=-x_i,\quad\sigma_2(x_i)=x_i,\quad\sigma_2(-x_i)=-x_{\sigma'(i)},
+\] 
+and we define \(\sigma_3,\sigma_4,\ldots,\sigma_m\) as follows: 
+
+\(\sigma_3\) is the transposition \((x_{\sigma'(k)},-x_{\sigma'(k)})\) where \(k\) is the least element of \(K\), 
+
+\(\sigma_4\) is the transposition \((x_{\sigma'(k)},-x_{\sigma'(k)})\) where \(k\) is the next element of \(K\), 
+
+\ldots, 
+
+\(\sigma_m\) is the transposition \((x_{\sigma'(k)},-x_{\sigma'(k)})\) where \(k\) is the largest element of \(K\). 
+
+\noindent In particular \(\sigma_2\circ\sigma_1\) sends \(x_i\) to \(x_{\sigma'(i)}\) and \(-x_i\) to \(-x_{\sigma'(i)}\). We have \(\sgn(\sigma_1)\cdot\sgn(\sigma_2)=\sgn(\sigma')^2=1\), and each of \(\sigma_3,\ldots,\sigma_m\) is a transposition, giving \(\sgn(\sigma)=(-1)^{|K|}\), and we easily check the equalities \eqref{Esmk} and \eqref{Esign}.  
+\end{proof} 
+
+\begin{proof}[Second proof of Theorem \ref{TSGL}] 
+Theorem \ref{TSGL} follows from Lemma \ref{L1} and Theorem \ref{TGGL}. 
+\end{proof} 
+
+\section{A generalization of Euler's Criterion}% 
+
+Let \(m\) be a positive integer and \(G\) the group \(\Z/m\Z\). For each integer \(k\) we set \(kG=\{k\gamma\mid\gamma\in G\}\) and we define \(f_k:G\to G\) by \(f_k(\gamma)=k\gamma\). Note that \(kG\) is a subgroup of \(G\) and \(f_k\) is an endomorphism of \(G\). 
+
+\begin{prop} 
+If \(k\) is an integer and if \(d=\gcd(k,m)\), then \(\Ima f_k=kG=dG=\Ker f_{m/d}\), and the order of this subgroup is \(\frac md\). 
+\end{prop} 
+
+We get Euler's Criterion by setting \(m=p-1\) and \(k=2\), which gives \(d=2\) and \(\frac md=(p-1)/2\). 
+
+\begin{proof} 
+To prove \(kG=dG\), note that we have \(k\Z+m\Z=d\Z\) by definition of \(d\), and that these subgroups of \(\Z\) project respectively to \(kG\) and to \(dG\) in \(G\). To show \(dG\subset\Ker f_{m/d}\) note that \(\frac mdd\gamma=m\gamma=0\) for \(\gamma\in G\). Let us check \(\Ker f_{m/d}\subset dG\). Let \(x\) be an integer such that \(\frac mdx\equiv0\pmod{m}\). We must show that \(d\) divides \(x\). But we have \(\frac mdx\in m\Z\), and thus \(\frac xd\in\Z\). It only remains to prove \(|dG|=\frac md\). Setting \(\bar x=x\bmod m\) for \(x\in\Z\), we get, since \(\frac md\bar d=\bar0\), 
+\[
+dG=\{\ldots,-2\bar d,-\bar d,\bar0,\bar d,2\bar d,\ldots\}=\{\bar0,\bar d,2\bar d,\ldots,(\tfrac md-1)\,\bar d\,\},
+\] 
+and the elements \(\bar0,\bar d,2\bar d,\ldots,(\frac md-1)\,\bar d\) are distinct because \(0<d<2d<\cdots<(\frac md-1)d<m\).
+\end{proof} 
+
+\printbibliography
+
+\end{document}
